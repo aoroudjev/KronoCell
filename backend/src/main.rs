@@ -1,11 +1,16 @@
-#[macro_use] extern crate rocket;
+use rocket::{get, routes, launch, build};
 
 #[get("/")]
 fn index() -> &'static str {
     "Hello, world!"
 }
 
+#[get("/upload")]
+fn upload() -> &'static str {
+    "Hello, uploader!"
+}
+
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![index])
+    build().mount("/", routes![index, upload])
 }

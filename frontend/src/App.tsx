@@ -1,33 +1,52 @@
-import { useState } from 'react'
-import './App.css'
+import React, {useState, useRef} from "react";
+import FileExplorer from "./components/FileExplorer/FileExplorer.tsx";
+import "./App.css"; // Import CSS
 
-function App() {
-  const [count, setCount] = useState(0)
+const MAX_WIDTH_PERCENT = 0.2;
+const MIN_WIDTH = 200;
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          Vite Docs
-        </a>
-        <a href="https://react.dev" target="_blank">
-          React Docs
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+const App: React.FC = () => {
+    const [sidebarWidth, setSidebarWidth] = useState(MIN_WIDTH);
+    const [selectedFileContent, setSelectedFileContent] = useState<string | null>(null);
+    const sidebarRef = useRef<HTMLDivElement>(null);
 
-export default App
+    // Handle sidebar resizing
+    const handleMouseDown = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        event.preventDefault();
+        const startX = event.clientX;
+        const startWidth = sidebarWidth;
+
+        const handleMouseMove = (moveEvent: MouseEvent) => {
+            const newWidth = Math.min(screen.width * MAX_WIDTH_PERCENT, Math.max(MIN_WIDTH, startWidth + moveEvent.clientX - startX));
+            setSidebarWidth(newWidth);
+        };
+
+        const handleMouseUp = () => {
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseup", handleMouseUp);
+        };
+
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseup", handleMouseUp);
+    };
+
+    return (
+        <div className="app-container">
+            {/* Sidebar (File Explorer) */}
+            <div ref={sidebarRef} className="sidebar" style={{width: `${sidebarWidth}px`}}>
+                <FileExplorer setSelectedFileContent={setSelectedFileContent}/>
+            </div>
+
+            {/* Resizer (Draggable Divider) */}
+            <div className="resizer" onMouseDown={handleMouseDown}/>
+
+            {/* Main Content*/}
+            <div className="main-content">
+                <h1>Main Application</h1>
+                {selectedFileContent ? <pre>{selectedFileContent}</pre> : <p>Please select a file...</p>}
+            </div>
+        </div>
+    );
+};
+
+export default App;
