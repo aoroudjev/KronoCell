@@ -6,13 +6,10 @@
 /* Base styles for the file tree */
 .file-explorer {
     line-height: 1.75;
-    z-index: 1;
     display: flex;
     flex-direction: column;
-    overflow: auto;
+    overflow: hidden;
     height: 100%;
-    text-overflow: ellipsis;
-    text-wrap: nowrap;
 }
 
 .file-explorer h2 {
@@ -24,13 +21,30 @@
     flex-grow: 1;
     padding: 5px;
     max-height: 100%;
-    overflow: scroll;
+    overflow-x: auto;  /* Enable horizontal scrolling */
+    overflow-y: auto;  /* Keep vertical scrolling */
+    white-space: nowrap; /* Prevent text wrapping */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-overflow: ellipsis;
 }
 
 .fileTree-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 3px;
     border-radius: 5px;
-    text-wrap: wrap;
-    padding-top: 3px;
+    transition: background-color 50ms ease-in-out;
+}
+
+.fileTree-item.directory {
+    font-weight: bold;
+}
+
+.fileTree-item:hover {
+    background: #000000;
 }
 
 /* File and Folder Names */
@@ -39,26 +53,36 @@
     cursor: pointer;
     white-space: nowrap;
     text-overflow: ellipsis;
+    user-select: none;
 }
 
 .selected {
-    background: #ff0073;
+    background: deeppink;
     transition: background-color 0.3s ease-in-out;
 }
 
 .selected:hover {
-    background: #ff0073;
+    background: deeppink;
 }
 
-/* Expandable content container containing file children */
-.file-children {
-    overflow: hidden;
-    max-height: 0;
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-}
 
 .file-children.expanded {
     max-height: 100%;
     opacity: 1;
+}
+
+.file-children {
+    position: relative;
+    margin-left: 20px; /* Indentation for child items */
+    padding-left: 10px; /* Space for the vertical line */
+}
+
+.file-children::before {
+    content: "";
+    position: absolute;
+    left: -10px; /* Position the line to align with parent */
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: deeppink; /* Line color */
 }

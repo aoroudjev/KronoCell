@@ -2,7 +2,7 @@ import React, {useRef, useState} from "react";
 import FileExplorer from "./components/FileExplorer/FileExplorer.tsx";
 import "./App.css";
 
-const MAX_WIDTH_PERCENT = 0.4;
+const MAX_WIDTH_PERCENT = 0.5;
 const MIN_WIDTH_PERCENT = 0.1;
 
 const App: React.FC = () => {

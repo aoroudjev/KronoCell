@@ -16,8 +16,6 @@ interface FileTreeProps {
     setSelectedFile: (fileName: FileNode) => void;
 }
 
-const INDENT_SIZE = 20; // Base indent size
-
 const FileTree: React.FC<FileTreeProps> = ({node, selectedFile, setSelectedFile, indent = 0}) => {
     const [expanded, setExpanded] = useState<boolean>(false);
 
@@ -36,34 +34,34 @@ const FileTree: React.FC<FileTreeProps> = ({node, selectedFile, setSelectedFile,
     return (
         <div>
             {/* Display logic for nodes */}
-            <div style={{marginLeft: `${indent * INDENT_SIZE}px`}}>
-                <div
-                    className={`fileTree-item ${node.type} ${selectedFile === node ? "selected" : ""}`}
-                    onClick={node.type === "directory" ? toggleExpanded : handleFileClick}
-                    data-fullname={node.name}
-                >
-                    <span className="file-name">
-                        {node.type === "directory" ? (expanded ? <AiOutlineFolderOpen/> : <AiOutlineFolder/>) :
-                            <AiOutlineFile/>}
-                        {node.name}
-                    </span>
-                </div>
+            <div
+                className={`fileTree-item ${node.type} ${selectedFile === node ? "selected" : ""}`}
+                onClick={node.type === "directory" ? toggleExpanded : handleFileClick}
+                data-fullname={node.name}
+            >
+                <span className="file-name">
+                    {node.type === "directory" ? (expanded ? <AiOutlineFolderOpen /> : <AiOutlineFolder />) : <AiOutlineFile />}
+                    {node.name}
+                </span>
             </div>
 
             {/* Children */}
-            <div className={`file-children expanded ${expanded ? "expanded" : "collapsed"}`}>
-                {node.children?.map((child: FileNode, index) => (
-                    <FileTree
-                        key={`${child.name}-${index}`}
-                        node={child}
-                        indent={indent + 1}
-                        selectedFile={selectedFile}
-                        setSelectedFile={setSelectedFile}
-                    />
-                ))}
-            </div>
+            {expanded && (
+                <div className={`file-children ${expanded ? "expanded" : "collapsed"}`}>
+                    {node.children?.map((child: FileNode, index) => (
+                        <FileTree
+                            key={`${child.name}-${index}`}
+                            node={child}
+                            indent={indent + 1} // Increase indent for child nodes
+                            selectedFile={selectedFile}
+                            setSelectedFile={setSelectedFile}
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
 
 export default FileTree;
+
