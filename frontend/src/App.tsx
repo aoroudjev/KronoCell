@@ -1,27 +1,41 @@
-import React, {useState, useRef} from "react";
+import React, {useRef, useState} from "react";
 import FileExplorer from "./components/FileExplorer/FileExplorer.tsx";
-import "./App.css"; // Import CSS
+import "./App.css";
 
-const MAX_WIDTH_PERCENT = 0.2;
-const MIN_WIDTH = 200;
+const MAX_WIDTH_PERCENT = 0.4;
+const MIN_WIDTH_PERCENT = 0.1;
 
 const App: React.FC = () => {
-    const [sidebarWidth, setSidebarWidth] = useState(MIN_WIDTH);
     const [selectedFileContent, setSelectedFileContent] = useState<string | null>(null);
+    const [sidebarWidth, setSidebarWidth] = useState(300); // Initial width
     const sidebarRef = useRef<HTMLDivElement>(null);
+    const widthRef = useRef(sidebarWidth);
+    const resizeRef = useRef<number | null>(null); // Store animation frame ID
 
-    // Handle sidebar resizing
     const handleMouseDown = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.preventDefault();
         const startX = event.clientX;
-        const startWidth = sidebarWidth;
+        const startWidth = widthRef.current;
 
         const handleMouseMove = (moveEvent: MouseEvent) => {
-            const newWidth = Math.min(screen.width * MAX_WIDTH_PERCENT, Math.max(MIN_WIDTH, startWidth + moveEvent.clientX - startX));
-            setSidebarWidth(newWidth);
+            if (resizeRef.current) return;
+
+            resizeRef.current = requestAnimationFrame(() => {
+                const newWidth = Math.min(
+                    window.innerWidth * MAX_WIDTH_PERCENT,
+                    Math.max(window.innerWidth * MIN_WIDTH_PERCENT, startWidth + moveEvent.clientX - startX)
+                );
+
+                if (sidebarRef.current) {
+                    sidebarRef.current.style.width = `${newWidth}px`;
+                }
+                widthRef.current = newWidth;
+                resizeRef.current = null; // Reset animation frame lock
+            });
         };
 
         const handleMouseUp = () => {
+            setSidebarWidth(widthRef.current); // Commit final width to state
             document.removeEventListener("mousemove", handleMouseMove);
             document.removeEventListener("mouseup", handleMouseUp);
         };

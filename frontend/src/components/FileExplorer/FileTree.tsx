@@ -12,7 +12,7 @@ interface FileNode {
 interface FileTreeProps {
     node: FileNode;
     indent?: number;
-    selectedFile: string | null;
+    selectedFile: FileNode | null;
     setSelectedFile: (fileName: FileNode) => void;
 }
 
@@ -38,34 +38,30 @@ const FileTree: React.FC<FileTreeProps> = ({node, selectedFile, setSelectedFile,
             {/* Display logic for nodes */}
             <div style={{marginLeft: `${indent * INDENT_SIZE}px`}}>
                 <div
-                    className={`${node.type} ${selectedFile === node.name ? "selected" : ""} fileTree-item`}
+                    className={`fileTree-item ${node.type} ${selectedFile === node ? "selected" : ""}`}
                     onClick={node.type === "directory" ? toggleExpanded : handleFileClick}
                     data-fullname={node.name}
                 >
-                    <span>
+                    <span className="file-name">
                         {node.type === "directory" ? (expanded ? <AiOutlineFolderOpen/> : <AiOutlineFolder/>) :
                             <AiOutlineFile/>}
-                    </span>
-                    <span className="file-name">
                         {node.name}
                     </span>
                 </div>
             </div>
 
             {/* Children */}
-            {expanded && node.children && (
-                <div>
-                    {node.children.map((child: FileNode, index) => (
-                        <FileTree
-                            key={`${child.name}-${index}`}
-                            node={child}
-                            indent={indent + 1}
-                            selectedFile={selectedFile}
-                            setSelectedFile={setSelectedFile}
-                        />
-                    ))}
-                </div>
-            )}
+            <div className={`file-children expanded ${expanded ? "expanded" : "collapsed"}`}>
+                {node.children?.map((child: FileNode, index) => (
+                    <FileTree
+                        key={`${child.name}-${index}`}
+                        node={child}
+                        indent={indent + 1}
+                        selectedFile={selectedFile}
+                        setSelectedFile={setSelectedFile}
+                    />
+                ))}
+            </div>
         </div>
     );
 };

@@ -9,8 +9,10 @@
     z-index: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow: auto;
     height: 100%;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
 }
 
 .file-explorer h2 {
@@ -18,30 +20,17 @@
 }
 
 /* File List Container (Allows Scrolling) */
-.file-list {
+.file-tree {
     flex-grow: 1;
     padding: 5px;
-    text-wrap: nowrap;
-    max-width: 100%;
+    max-height: 100%;
+    overflow: scroll;
 }
 
-/* File & Folder Styling */
-.file-explorer .file {
-    display: flex;
-    flex-wrap: nowrap;
-    font-weight: normal;
-    user-select: none;
-    text-overflow: ellipsis;
-    padding-top: 5px;
-}
-
-.file-explorer .directory {
-    display: flex;
-    font-weight: bold;
-    flex-wrap: nowrap;
-    user-select: none;
-    padding-top: 5px;
-    text-overflow: ellipsis;
+.fileTree-item {
+    border-radius: 5px;
+    text-wrap: wrap;
+    padding-top: 3px;
 }
 
 /* File and Folder Names */
@@ -49,26 +38,27 @@
     align-items: center;
     cursor: pointer;
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
-    padding-left: 5px;
 }
 
 .selected {
-    border-color: #535bf2;
-    /*border-style: solid;*/
+    background: #ff0073;
+    transition: background-color 0.3s ease-in-out;
 }
 
-.fileTree-item{
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    border-radius: 10px;
-    padding-left: 5px;
-    border-width: 1px;
+.selected:hover {
+    background: #ff0073;
 }
 
-.fileTree-item:hover {
-    background-color: #181818;
-    /*transition: 200ms;*/
+/* Expandable content container containing file children */
+.file-children {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.file-children.expanded {
+    max-height: 100%;
+    opacity: 1;
 }

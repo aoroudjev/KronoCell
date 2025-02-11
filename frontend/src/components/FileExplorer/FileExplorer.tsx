@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import FileUpload from "./FileUpload.tsx";
 import parseZip from "../../utils/parseZip.ts";
 import FileTree from "./FileTree.tsx";
@@ -16,7 +16,7 @@ interface FileExplorerProps {
 
 const FileExplorer: React.FC<FileExplorerProps>= ({ setSelectedFileContent }) => {
     const [fileTree, setFileTree] = useState<FileNode | null>(null);
-    const [selectedFile, setSelectedFile] = useState<string | null>(null);
+    const [selectedFile, setSelectedFile] = useState<FileNode | null>(null);
 
     const handleZipUpload = async (file: File) => {
         const tree = await parseZip(file);
@@ -27,19 +27,19 @@ const FileExplorer: React.FC<FileExplorerProps>= ({ setSelectedFileContent }) =>
         if (fileNode.type === "file") {
             const fileContent = await readFileContent(fileNode.name);
             setSelectedFileContent(fileContent);
-            setSelectedFile(fileNode.name);
+            setSelectedFile(fileNode);
         }
     };
 
     const readFileContent = async (fileName: string): Promise<string> => {
-        return `Simulated content of ${fileName}`; // Replace this with actual file reading logic
+        return `Simulated content of ${fileName}`;
     };
 
     return (
         <div className="file-explorer">
             <h2>File Explorer</h2>
             <FileUpload onUpload={handleZipUpload} />
-            <div className="file-list">
+            <div className="file-tree">
                 {fileTree && <FileTree node={fileTree} selectedFile={selectedFile} setSelectedFile={handleFileSelect} />}
             </div>
         </div>

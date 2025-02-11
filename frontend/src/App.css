@@ -6,14 +6,6 @@
   overflow: hidden;
 }
 
-/* Sidebar (File Explorer) - Expands and Pushes Main Content */
-.sidebar {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
 /* Ensure the file list inside the sidebar can scroll */
 .file-list {
   flex-grow: 1;
@@ -29,8 +21,9 @@
   transition: background 0.2s;
 }
 
-.resizer:hover {
-  background: #aaa;
+/* Move button when collapsed */
+.sidebar.collapsed + .collapse-btn {
+  left: 10px;
 }
 
 /* Main Content (Shifts as Sidebar Expands) */
