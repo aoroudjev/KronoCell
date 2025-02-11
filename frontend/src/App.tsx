@@ -57,7 +57,9 @@ const App: React.FC = () => {
             {/* Main Content*/}
             <div className="main-content">
                 <h1>Main Application</h1>
-                {selectedFileContent ? <pre>{selectedFileContent}</pre> : <p>Please select a file...</p>}
+                {selectedFileContent ? <img src={selectedFileContent}  style={{maxWidth: "100%", height: "auto"}} alt={selectedFileContent.toString()}/> :
+                    <p>Please select a file...</p>}
+
             </div>
         </div>
     );

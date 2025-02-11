@@ -3,6 +3,7 @@ import JSZip from "jszip";
 interface FileNode {
     name: string;
     type: "file" | "directory";
+    zipEntry?: JSZip.JSZipObject;
     children?: FileNode[];
 }
 
@@ -11,7 +12,7 @@ const parseZip = async (file: File): Promise<FileNode> => {
     const root: FileNode = { name: file.name, type: "directory", children: [] };
 
     zip.forEach((relativePath, zipEntry) => {
-        const parts = relativePath.split("/").filter((part) => part !== ""); // Ensure no empty parts
+        const parts = relativePath.split("/").filter((part) => part !== "");
         let current = root;
 
         for (let i = 0; i < parts.length; i++) {
@@ -23,6 +24,7 @@ const parseZip = async (file: File): Promise<FileNode> => {
                 existingNode = {
                     name: part,
                     type: isFile ? "file" : "directory",
+                    zipEntry: isFile? zipEntry : undefined,
                     children: isFile ? undefined : [],
                 };
 

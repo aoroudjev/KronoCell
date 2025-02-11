@@ -3,10 +3,12 @@ import FileUpload from "./FileUpload.tsx";
 import parseZip from "../../utils/parseZip.ts";
 import FileTree from "./FileTree.tsx";
 import "./FileExplorer.css";
+import JSZip from "jszip";
 
 interface FileNode {
     name: string;
     type: "file" | "directory";
+    zipEntry?: JSZip.JSZipObject;
     children?: FileNode[];
 }
 
@@ -24,15 +26,12 @@ const FileExplorer: React.FC<FileExplorerProps>= ({ setSelectedFileContent }) =>
     };
 
     const handleFileSelect = async (fileNode: FileNode) => {
-        if (fileNode.type === "file") {
-            const fileContent = await readFileContent(fileNode.name);
-            setSelectedFileContent(fileContent);
+        if (fileNode.type === "file" && fileNode.zipEntry) {
+            const blob = await fileNode.zipEntry.async("blob"); // Extract on demand
+            const blobURL = URL.createObjectURL(blob);
+            setSelectedFileContent(blobURL);
             setSelectedFile(fileNode);
         }
-    };
-
-    const readFileContent = async (fileName: string): Promise<string> => {
-        return `Simulated content of ${fileName}`;
     };
 
     return (
