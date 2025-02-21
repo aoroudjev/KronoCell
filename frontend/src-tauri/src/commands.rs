@@ -14,7 +14,8 @@ pub fn parse_directory(directory_path: String) -> FileNode {
     let path = Path::new(&directory_path);
 
     let mut root = FileNode {
-        name: path.file_name()
+        name: path
+            .file_name()
             .unwrap_or_else(|| path.as_os_str())
             .to_string_lossy()
             .to_string(),
@@ -28,11 +29,13 @@ pub fn parse_directory(directory_path: String) -> FileNode {
             let is_file = entry_path.is_file();
 
             let node = FileNode {
-                name: entry.file_name().to_string_lossy().to_string(),
+                name: entry
+                    .file_name()
+                    .to_string_lossy()
+                    .to_string(),
                 file_type: if is_file { "file".to_string() } else { "directory".to_string() },
                 children: if is_file { None } else { Some(vec![]) },
             };
-
 
             if !is_file {
                 root.children.as_mut().unwrap().push(parse_directory(entry_path.to_string_lossy().to_string()));
