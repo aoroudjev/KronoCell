@@ -11,8 +11,7 @@ A cell tracking application built for local use but easily deployable. Using Ele
 
 ---
 To work on this, the follwing is required:
-- Vite with React (Requires Node.js [https://nodejs.org/en/download])
-  - Latest version of Vite [https://vite.dev/guide/]
+- React (Requires Node.js [https://nodejs.org/en/download])
 - Rust [https://www.rust-lang.org/tools/install]
 - TBD...
 
