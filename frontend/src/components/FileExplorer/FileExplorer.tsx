@@ -1,35 +1,30 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
+
 import FileUpload from "./FileUpload.tsx";
-import parseZip from "../../utils/parseZip.ts";
+import {FileNode} from "./FileNode.ts";
 import FileTree from "./FileTree.tsx";
 import "./FileExplorer.css";
-import JSZip from "jszip";
 
-interface FileNode {
-    name: string;
-    type: "file" | "directory";
-    zipEntry?: JSZip.JSZipObject;
-    children?: FileNode[];
-}
+import parseDirectory from "../../utils/parseDirectory.ts";
+import {readFile} from "@tauri-apps/plugin-fs";
 
 interface FileExplorerProps {
-    setSelectedFileContent: (content: string | null) => void; // Function to pass file content to App
+    setSelectedFileContent: (content: Uint8Array | null) => void; // Function to pass file content to App
 }
 
-const FileExplorer: React.FC<FileExplorerProps>= ({ setSelectedFileContent }) => {
+const FileExplorer: React.FC<FileExplorerProps> = ({setSelectedFileContent}) => {
     const [fileTree, setFileTree] = useState<FileNode | null>(null);
     const [selectedFile, setSelectedFile] = useState<FileNode | null>(null);
 
-    const handleZipUpload = async (file: File) => {
-        const tree = await parseZip(file);
+    const handleDirectoryUpload = async (directory: string) => {
+        const tree = await parseDirectory(directory);
         setFileTree(tree);
     };
 
     const handleFileSelect = async (fileNode: FileNode) => {
-        if (fileNode.type === "file" && fileNode.zipEntry) {
-            const blob = await fileNode.zipEntry.async("blob"); // Extract on demand
-            const blobURL = URL.createObjectURL(blob);
-            setSelectedFileContent(blobURL);
+        if (fileNode.type === "file") {
+            const content = await readFile(fileNode.name) // Extract on demand
+            setSelectedFileContent(content);
             setSelectedFile(fileNode);
         }
     };
@@ -37,9 +32,9 @@ const FileExplorer: React.FC<FileExplorerProps>= ({ setSelectedFileContent }) =>
     return (
         <div className="file-explorer">
             <h2>File Explorer</h2>
-            <FileUpload onUpload={handleZipUpload} />
+            <FileUpload onUpload={handleDirectoryUpload}/>
             <div className="file-tree">
-                {fileTree && <FileTree node={fileTree} selectedFile={selectedFile} setSelectedFile={handleFileSelect} />}
+                {fileTree && <FileTree node={fileTree} selectedFile={selectedFile} setSelectedFile={handleFileSelect}/>}
             </div>
         </div>
     );

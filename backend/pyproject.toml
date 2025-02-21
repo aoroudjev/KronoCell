@@ -1,0 +1,7 @@
+[project]
+name = "Tracker"
+version = "0.1.0"
+description = "Addition to backend of KronoCell."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []

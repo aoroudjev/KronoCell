@@ -73,16 +73,16 @@
 
 .file-children {
     position: relative;
-    margin-left: 20px; /* Indentation for child items */
-    padding-left: 10px; /* Space for the vertical line */
+    margin-left: 20px;
+    padding-left: 10px;
 }
 
 .file-children::before {
     content: "";
     position: absolute;
-    left: -10px; /* Position the line to align with parent */
+    left: -10px;
     top: 0;
     bottom: 0;
     width: 2px;
-    background-color: deeppink; /* Line color */
+    background-color: deeppink;
 }

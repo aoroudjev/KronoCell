@@ -1,26 +1,34 @@
 import * as React from "react";
+import { open } from '@tauri-apps/plugin-dialog';
 
 interface FileUploadProps {
-    onUpload: (file: File) => void;
+    onUpload: (path: string) => void;
 }
 
 /**
  * File upload component accepts zip, rar, and 7zip
  */
-const FileUpload: React.FC<FileUploadProps> = ({onUpload}) => {
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files.length > 0) {
-            const file = event.target.files[0];
-            onUpload(file);
+const FileUpload: React.FC<FileUploadProps> = ({ onUpload }) => {
+    const selectDirDialog = async () => {
+        try {
+            const file = await open({
+                multiple: false,
+                directory: true,
+            });
+
+            if (file) {
+                onUpload(file);
+            }
+        } catch (e) {
+            console.error("Error selecting directory:", e);
         }
     };
 
     return (
         <div>
-            <input type="file" accept=".zip,.rar,.7zip" onChange={handleFileChange}/>
+            <button onClick={selectDirDialog}>Select Directory</button>
         </div>
     );
 };
-
 
 export default FileUpload;

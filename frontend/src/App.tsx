@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useRef, useState } from "react";
 import FileExplorer from "./components/FileExplorer/FileExplorer.tsx";
 import "./App.css";
 
