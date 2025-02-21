@@ -33,11 +33,12 @@ pub fn parse_directory(directory_path: String) -> FileNode {
                 children: if is_file { None } else { Some(vec![]) },
             };
 
-            root.children.as_mut().unwrap().push(node);
 
-//             if !is_file || entry_path.extension().map(|ext| ext == "jpeg" || ext == "jpg" || ext == "png" || ext == "tiff").unwrap_or(false) {
-//                 root.children.as_mut().unwrap().push(node);
-//             }
+            if !is_file {
+                root.children.as_mut().unwrap().push(parse_directory(entry_path.to_string_lossy().to_string()));
+            } else if entry_path.extension().map(|ext| ext == "jpeg" || ext == "jpg" || ext == "png" || ext == "tiff").unwrap_or(false) {
+                root.children.as_mut().unwrap().push(node);
+            }
         }
     }
 
