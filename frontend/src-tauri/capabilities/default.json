@@ -7,6 +7,14 @@
   ],
   "permissions": [
     "core:default",
-    "dialog:default"
+    "dialog:default",
+    "fs:allow-read-file",
+    "fs:allow-read-dir",
+    "fs:allow-home-read",
+    "fs:allow-desktop-read",
+    "fs:allow-document-read",
+    "fs:allow-download-read",
+    "fs:allow-public-read",
+    "fs:read-all"
   ]
 }

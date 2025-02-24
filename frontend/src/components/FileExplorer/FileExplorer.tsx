@@ -6,13 +6,12 @@ import FileTree from "./FileTree.tsx";
 import "./FileExplorer.css";
 
 import parseDirectory from "../../utils/parseDirectory.ts";
-import {readFile} from "@tauri-apps/plugin-fs";
 
 interface FileExplorerProps {
-    setSelectedFileContent: (content: Uint8Array | null) => void; // Function to pass file content to App
+    setSelectedFilePath: (content: string | null) => void; // Function to pass file content to App
 }
 
-const FileExplorer: React.FC<FileExplorerProps> = ({setSelectedFileContent}) => {
+const FileExplorer: React.FC<FileExplorerProps> = ({setSelectedFilePath}) => {
     const [fileTree, setFileTree] = useState<FileNode | null>(null);
     const [selectedFile, setSelectedFile] = useState<FileNode | null>(null);
 
@@ -22,9 +21,9 @@ const FileExplorer: React.FC<FileExplorerProps> = ({setSelectedFileContent}) => 
     };
 
     const handleFileSelect = async (fileNode: FileNode) => {
-        if (fileNode.type === "file") {
-            const content = await readFile(fileNode.name) // Extract on demand
-            setSelectedFileContent(content);
+        if (fileNode.file_type === "file") {
+            console.log(fileNode.path);
+            setSelectedFilePath(fileNode.path);
             setSelectedFile(fileNode);
         }
     };

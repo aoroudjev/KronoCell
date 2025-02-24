@@ -35,6 +35,9 @@
     ]
   },
   "plugins": {
-    "dialog": null
+    "dialog": null,
+    "fs": {
+      "requireLiteralLeadingDot": false
+    }
   }
 }
