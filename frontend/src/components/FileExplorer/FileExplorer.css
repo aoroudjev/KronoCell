@@ -57,12 +57,12 @@
 }
 
 .selected {
-    background: deeppink;
+    background: gray;
     transition: background-color 0.3s ease-in-out;
 }
 
 .selected:hover {
-    background: deeppink;
+    background: gray;
 }
 
 
@@ -73,16 +73,15 @@
 
 .file-children {
     position: relative;
-    margin-left: 20px;
-    padding-left: 10px;
+    margin-left: 15px;
 }
 
 .file-children::before {
     content: "";
     position: absolute;
-    left: -10px;
+    left: -5px;
     top: 0;
     bottom: 0;
     width: 2px;
-    background-color: deeppink;
+    background-color: gray;
 }

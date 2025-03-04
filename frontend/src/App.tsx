@@ -80,7 +80,7 @@ const App: React.FC = () => {
             <div className="main-content">
                 <h1>Main Application</h1>
                 {imageSrc ? (
-                    <img src={imageSrc} style={{ maxWidth: "100%", height: "auto" }} alt="Loaded" />
+                    <img className="preview-image" src={imageSrc} alt="Loaded" object-fit={"cover"}/>
                 ) : (
                     <p>Please select a file...</p>
                 )}

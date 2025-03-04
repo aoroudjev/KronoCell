@@ -49,7 +49,7 @@ pub fn parse_directory(directory_path: String) -> FileNode {
                                 if ext_lower == "jpeg"
                                     || ext_lower == "jpg"
                                     || ext_lower == "png"
-                                    || ext_lower == "tiff"
+                                    || ext_lower == "tif"
                                 {
                                     node.children.as_mut().unwrap().push(FileNode {
                                         path: entry_path.to_string_lossy().to_string(),
