@@ -51,18 +51,20 @@ const App: React.FC = () => {
                 return;
             }
             try {
-                // Call the Rust command to load the image
-                const [base64Str, mimeType] = await invoke<[string, string]>(
-                    "load_image_file",
-                    { filePath: selectedFilePath }
-                );
-                // Create a data URL using the returned base64 string and MIME type
-                const dataUrl = `data:${mimeType};base64,${base64Str}`;
-                setImageSrc(dataUrl);
+                // Fetch the image as binary
+                const imageBytes = await invoke<Uint8Array>("load_image_file", {
+                    filePath: selectedFilePath,
+                });
+
+                // Convert to a Blob URL
+                const blob = new Blob([new Uint8Array(imageBytes)], { type: "image/png" });
+                const url = URL.createObjectURL(blob);
+                setImageSrc(url);
             } catch (error) {
                 console.error("Error loading image:", error);
             }
         }
+
         loadImage();
     }, [selectedFilePath]);
 
