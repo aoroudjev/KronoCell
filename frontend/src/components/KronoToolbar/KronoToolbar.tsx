@@ -8,6 +8,8 @@ const KronoToolbar: React.FC = () => {
     const fileMenuRef = useRef<Menu>(null);
     const editMenuRef = useRef<Menu>(null);
 
+    const menuItems = [fileMenuRef, editMenuRef]
+
     const fileItems: MenuItem[] = [
         {label: "New", icon: "pi pi-plus", command: () => console.log("New")},
         {label: "Open…", icon: "pi pi-folder-open", command: () => console.log("Open")},
@@ -25,6 +27,12 @@ const KronoToolbar: React.FC = () => {
         {label: "Paste", icon: "pi pi-clipboard", command: () => console.log("Paste")}
     ];
 
+    const hideItems = (menuItems: React.MutableRefObject<Menu | null>[], e: React.MouseEvent) => {
+        for (const menuRef of menuItems) {
+            menuRef.current?.hide(e);
+        }
+    };
+
     return (
         <div
             style={{
@@ -39,11 +47,14 @@ const KronoToolbar: React.FC = () => {
                 boxShadow: "0 2px 8px rgba(0,0,0,0.35)"
             }}
         >
-            {/* File (hamburger) */}
+            {/* File */}
             <Button
                 label="File"
                 icon="pi pi-bars"
-                onClick={(e) => fileMenuRef.current?.toggle(e)}
+                onClick={(e) => {
+                    hideItems(menuItems, e);
+                    fileMenuRef.current?.toggle(e);
+                }}
                 text
                 style={{color: "white"}}
             />
@@ -52,7 +63,10 @@ const KronoToolbar: React.FC = () => {
             {/* Edit */}
             <Button
                 label="Edit"
-                onClick={(e) => editMenuRef.current?.toggle(e)}
+                onClick={(e) => {
+                    hideItems(menuItems, e);
+                    editMenuRef.current?.toggle(e)
+                }}
                 text
                 style={{color: "white"}}
             />
