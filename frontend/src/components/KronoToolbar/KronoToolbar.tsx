@@ -2,6 +2,7 @@ import React, {useRef} from "react";
 import {Button} from "primereact/button";
 import {Menu} from "primereact/menu";
 import type {MenuItem} from "primereact/menuitem";
+import {Nullable} from "primereact/ts-helpers";
 
 
 const KronoToolbar: React.FC = () => {
@@ -27,7 +28,7 @@ const KronoToolbar: React.FC = () => {
         {label: "Paste", icon: "pi pi-clipboard", command: () => console.log("Paste")}
     ];
 
-    const hideOthers = (targetRef: React.MutableRefObject<any>, e: React.MouseEvent) => {
+    const hideOthers = (targetRef: React.MutableRefObject<Menu | Nullable>, e: React.MouseEvent) => {
         for (const m of menus) {
             if (m !== targetRef) {
                 // pass event when available; fall back gracefully
