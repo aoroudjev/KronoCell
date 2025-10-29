@@ -1,36 +1,15 @@
 .collapsable-side-panel {
     position: relative;
-    width: 50%;                 /* expanded width */
+    width: 25%;
     transition: width 220ms ease;
-    overflow: hidden;           /* clip children on collapse */
+    overflow: hidden;
     border-left: 1px solid var(--surface-border, #e0e0e0);
     background: var(--surface-section, #fff);
     display: flex;
     flex-direction: column;
-    min-width: 0;               /* allow children to shrink */
 }
 
 /* collapsed state */
 .collapsable-side-panel.is-collapsed {
-    width: 0;                   /* fully collapsed */
-}
-
-.panel-content {
-    padding: 8px;
-    min-width: 0;               /* prevents Accordion from enforcing min width */
-}
-
-.collapsable-side-panel .p-accordion-content {
-    overflow: hidden;
-}
-
-/* toggle handle */
-.collapse-handle {
-    cursor: pointer;
-    border: none;
-}
-
-/* optional: show a subtle vertical grab area when collapsed */
-.collapsable-side-panel.is-collapsed .collapse-handle {
-    right: -4px;               /* nudge outward so it's still clickable */
+    width: 0;
 }

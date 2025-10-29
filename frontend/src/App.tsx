@@ -7,7 +7,6 @@ const App: React.FC = () => {
     return (
         <div className={"App"}>
             <KronoToolbar/>
-            <h1 style={{padding: 16}}>Image Editor</h1>
             <ImageViewer/>
         </div>
     );
