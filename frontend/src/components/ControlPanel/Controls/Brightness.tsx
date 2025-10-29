@@ -1,10 +1,10 @@
-import {Slider} from 'primereact/slider';
+import {Slider, SliderChangeEvent} from 'primereact/slider';
 import {useState} from "react";
 import {InputText} from "primereact/inputtext";
 
 
 const BrightnessController = () => {
-    const [value, setValue] = useState(50);
+    const [value, setValue] = useState(10);
 
     return (
         <div className="card flex justify-content-center">
@@ -16,8 +16,9 @@ const BrightnessController = () => {
                 />
                 <Slider
                     value={value}
-                    onChange={(e) => setValue(e.value)}
+                    onChange={(e: SliderChangeEvent) => setValue(e.value)}
                     className="w-full"
+                    max={20}
                 />
             </div>
         </div>

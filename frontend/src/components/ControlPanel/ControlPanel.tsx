@@ -1,11 +1,14 @@
-import React from 'react';
+// import React from 'react';
 import BrightnessController from "./Controls/Brightness.tsx";
+import "./ControlPanel.css"
 
 const ControlPanel = () => {
 
 
     return (
-        <BrightnessController/>
+        <div className="control-panel">
+            <BrightnessController/>
+        </div>
     );
 }
 

@@ -1,16 +1,10 @@
-import React, {useRef} from "react";
-import {Button} from "primereact/button";
-import {Menu} from "primereact/menu";
+import React from "react";
 import type {MenuItem} from "primereact/menuitem";
-import {Nullable} from "primereact/ts-helpers";
+import {Menubar} from "primereact/menubar";
+import "./KronoToolbar.css";
 
 
 const KronoToolbar: React.FC = () => {
-    const fileMenuRef = useRef<Menu>(null);
-    const editMenuRef = useRef<Menu>(null);
-
-    const menus = [fileMenuRef, editMenuRef];
-
     const fileItems: MenuItem[] = [
         {label: "New", icon: "pi pi-plus", command: () => console.log("New")},
         {label: "Open…", icon: "pi pi-folder-open", command: () => console.log("Open")},
@@ -28,62 +22,22 @@ const KronoToolbar: React.FC = () => {
         {label: "Paste", icon: "pi pi-clipboard", command: () => console.log("Paste")}
     ];
 
-    const hideOthers = (targetRef: React.MutableRefObject<Menu | Nullable>, e: React.MouseEvent) => {
-        for (const m of menus) {
-            if (m !== targetRef) {
-                // pass event when available; fall back gracefully
-                if (m.current?.hide) m.current.hide(e);
-                else if (m.current?.toggle) m.current.toggle(e);
-            }
+    const menuItems: MenuItem[] = [
+        {
+            label: 'File',
+            icon: 'pi pi-home',
+            items: fileItems
+        },
+        {
+            label: 'Edit',
+            icon: 'pi pi-bars',
+            items: editItems
         }
-    };
+    ]
 
     return (
-        <div
-            style={{
-                height: 56,
-                background: "#5f5f5f",           // solid background (gray-800)
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-                padding: "0 12px",
-                gap: 8,
-                borderRadius: 0,                 // square edges
-                boxShadow: "0 2px 8px rgba(0,0,0,0.35)"
-            }}
-        >
-            {/* File */}
-            <Button
-                label="File"
-                icon="pi pi-bars"
-                onClick={(e) => {
-                    hideOthers(fileMenuRef, e);
-                    fileMenuRef.current?.toggle?.(e);
-                }}
-                text
-                style={{color: "white"}}
-            />
-            <Menu model={fileItems} popup ref={fileMenuRef}/>
-
-            {/* Edit */}
-            <Button
-                label="Edit"
-                onClick={(e) => {
-                    hideOthers(editMenuRef, e);
-                    editMenuRef.current?.toggle?.(e);
-                }}
-                text
-                style={{color: "white"}}
-            />
-            <Menu model={editItems} popup ref={editMenuRef}/>
-
-            {/* Title / spacer */}
-            <div style={{marginLeft: 12, fontWeight: 600}}>KronoCell</div>
-
-            {/* push right-side actions to the edge */}
-            <div style={{marginLeft: "auto", display: "flex", gap: 8}}>
-                {/* optional right-side buttons/icons go here */}
-            </div>
+        <div>
+            <Menubar model={menuItems}/>
         </div>
     );
 };

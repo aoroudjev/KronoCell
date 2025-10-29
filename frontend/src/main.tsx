@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
+import '../index.css'
 import App from './App.tsx'
 import "primereact/resources/themes/lara-light-blue/theme.css"; // choose any theme you like
 import "primereact/resources/primereact.min.css";
