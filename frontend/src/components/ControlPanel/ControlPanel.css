@@ -1,0 +1,15 @@
+.collapsable-side-panel {
+    position: relative;
+    width: 25%;
+    transition: width 220ms ease;
+    overflow: hidden;
+    border-left: 1px solid var(--surface-border, #e0e0e0);
+    background: var(--surface-section, #fff);
+    display: flex;
+    flex-direction: column;
+}
+
+/* collapsed state */
+.collapsable-side-panel.is-collapsed {
+    width: 0;
+}
