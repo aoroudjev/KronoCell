@@ -4,6 +4,7 @@ import "./ControlPanel.css"
 import {Accordion, AccordionTab} from "primereact/accordion";
 import {useState} from "react";
 import {Button} from "primereact/button";
+import NumericSliderControl from "./Controls/NumericSliderControl.tsx";
 
 const ControlPanel = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -23,10 +24,11 @@ const ControlPanel = () => {
                         <AccordionTab header="Brightness">
                             <BrightnessController/>
                         </AccordionTab>
+                        <AccordionTab header="generic">
+                            <NumericSliderControl/>
+                        </AccordionTab>
                     </Accordion>
                 </div>
-
-
             </aside>
 
         </>

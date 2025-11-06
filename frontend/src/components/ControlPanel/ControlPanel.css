@@ -13,3 +13,7 @@
 .collapsable-side-panel.is-collapsed {
     width: 0;
 }
+
+.collapse-handle {
+    background-color: #747bff;
+}
