@@ -11,13 +11,8 @@ const ControlPanel = () => {
 
 
     return (
-        <>
-            <Button className="collapse-handle p-button p-button-text p-button-plain"
-                    onClick={() => setCollapsed(c => !c)}
-                    aria-label="Toggle side panel"
-                    icon={collapsed ? "pi pi-angle-right" : "pi pi-angle-left"}
-            >
-            </Button>
+        <div className={"control-panel-container"}>
+
             <aside className={`collapsable-side-panel ${collapsed ? "is-collapsed" : ""}`}>
                 <div className="panel-content">
                     <Accordion activeIndex={0}>
@@ -30,8 +25,13 @@ const ControlPanel = () => {
                     </Accordion>
                 </div>
             </aside>
-
-        </>
+            <Button className="collapse-handle p-button p-button-text p-button-plain"
+                    onClick={() => setCollapsed(c => !c)}
+                    aria-label="Toggle side panel"
+                    icon={collapsed ? "pi pi-angle-right" : "pi pi-angle-left"}
+            >
+            </Button>
+        </div>
     );
 }
 

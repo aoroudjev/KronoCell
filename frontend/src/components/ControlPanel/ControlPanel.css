@@ -1,3 +1,7 @@
+.control-panel-container {
+    display: flex;
+}
+
 .collapsable-side-panel {
     position: relative;
     width: 25%;

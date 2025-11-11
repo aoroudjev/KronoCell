@@ -1,4 +1,4 @@
-import {useCallback, useMemo, useState} from "react";
+import React, {useCallback, useMemo, useState} from "react";
 import {Slider, SliderChangeEvent} from "primereact/slider";
 import {InputText} from "primereact/inputtext";
 
