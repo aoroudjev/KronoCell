@@ -1,3 +1,7 @@
+.control-panel-container {
+    display: flex;
+}
+
 .collapsable-side-panel {
     position: relative;
     width: 25%;
@@ -12,4 +16,8 @@
 /* collapsed state */
 .collapsable-side-panel.is-collapsed {
     width: 0;
+}
+
+.collapse-handle {
+    background-color: #747bff;
 }

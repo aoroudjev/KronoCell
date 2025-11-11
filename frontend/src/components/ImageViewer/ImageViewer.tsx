@@ -6,6 +6,7 @@ const ImageViewer = () => {
     return (
         <div>
             <ControlPanel/>
+            <></>
         </div>
     );
 }
